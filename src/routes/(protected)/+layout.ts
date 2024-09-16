@@ -1,13 +1,19 @@
 import { redirect } from '@sveltejs/kit';
 import type { LayoutLoad } from './$types';
 import { getUserFromToken } from '$lib/serverCommunication';
+import { browser } from '$app/environment';
 
 export const load: LayoutLoad = async () => {
-	const token = localStorage.getItem('token');
+	if (browser) {
+		const token = localStorage.getItem('token');
 
-	if (!token) throw redirect(303, '/login');
+		if (!token) throw redirect(303, '/login');
 
-	const { user } = await getUserFromToken(token);
+		const { user } = await getUserFromToken(token);
 
-	return { user };
+		return { user };
+	} else {
+		throw redirect(303, '/login');
+	}
+	
 };
