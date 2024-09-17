@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { API_URL } from '$lib';
-	import type { User } from '$lib';
+	import type { AuthResponse, User } from '$lib';
 	import { user } from '$lib/stores/user';
 
 	let username = '';
@@ -9,10 +9,6 @@
 	let error: string | null = null;
 	let successMessage: null | 'Logged in succesfully' | 'Registered successfully' = null;
 
-	interface AuthResponse {
-		token: string;
-		user: User;
-	}
 
 	async function login(): Promise<void> {
 		try {
@@ -39,7 +35,7 @@
 
 			localStorage.setItem('token', data.token);
 			user.set(data.user);
-			goto('/');
+			goto('/dashboard');
 		} catch (err) {
 			error = 'An unexpected error occured';
 		}
@@ -70,7 +66,7 @@
 
 			localStorage.setItem('token', data.token);
 			user.set(data.user);
-			goto('/');
+			goto('/dashboard');
 		} catch (err) {
 			error = 'An unexpected error occured';
 		}

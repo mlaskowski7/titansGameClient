@@ -1,30 +1,24 @@
 import { API_URL } from './constants';
-import type { User } from './types';
+import type { AuthResponse, User } from './types';
 
-interface CheckTokenResponse {
-	user: User;
-	message: string;
-}
 
 export async function getUserFromToken(token: string): Promise<{ user?: User; message?: string }> {
 	try {
 		const resp = await fetch(`${API_URL}/auth/checkToken`, {
-			method: 'POST',
+			method: 'GET',
 			headers: {
-				'Content-Type': 'application/json'
+				'Authorization':`Bearer ${token}`
 			},
-			body: JSON.stringify({ token })
 		});
-
-		const data: CheckTokenResponse = await resp.json();
 
 		if (!resp.ok) {
 			return {
 				message:
-					data.message ||
 					"An unexpected error occured while trying to check user's token in session"
 			};
 		}
+
+		const data: AuthResponse = await resp.json();
 
 		return {
 			user: data.user
