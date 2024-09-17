@@ -1,16 +1,23 @@
 <script lang="ts">
-	import type { User } from '$lib/types';
-	import { page } from '$app/stores';
+	import type { User } from '$lib';
+	import { user } from '$lib/stores/user';
+	import { onDestroy } from 'svelte';
 
-	let user: User;
-	let message: string;
+	let currentUser: User | null;
 
-	$: user = $page.data.user;
-	$: message = $page.data.message;
+	const unsubscribe = user.subscribe(value => {
+		currentUser = value;
+	});
+
+	onDestroy(() => {
+		// clean up the subscription
+		unsubscribe();
+	})
+
 </script>
 
 {#if user}
-	<h1>Welcome, {user.username}!</h1>
+	<h1>Welcome, {currentUser?.username}!</h1>
 	<p>HERE WILL BE THE DASHBOARD</p>
 {:else}
 	<p>Loading...</p>

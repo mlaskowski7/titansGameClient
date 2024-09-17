@@ -8,7 +8,7 @@ interface CheckTokenResponse {
 
 export async function getUserFromToken(token: string): Promise<{ user?: User; message?: string }> {
 	try {
-		const resp = await fetch(`${API_URL}/checkToken`, {
+		const resp = await fetch(`${API_URL}/auth/checkToken`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
