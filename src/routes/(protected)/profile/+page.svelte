@@ -21,4 +21,5 @@
 <div class="flex flex-row gap-20 p-10 justify-center items-center">
     <Profile currentUser={currentUser} />
     <EditProfile currentUser={currentUser} />
+    
 </div>
