@@ -2,9 +2,13 @@
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
     import NavbarItem from './NavbarItem.svelte';
 	import { faTableCells, faRankingStar, faUser, faUsers, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+	import { user } from '$lib/stores/user';
+	import { goto } from '$app/navigation';
 
     function logout(): void {
-
+        localStorage.removeItem('token');
+        user.set(null);
+        goto('/login');
     }
 </script>
 

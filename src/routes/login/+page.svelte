@@ -37,7 +37,7 @@
 			localStorage.setItem('token', data.token);
 			user.set(data.user);
 			console.log(get(user));
-			await new Promise(resolve => setTimeout(resolve, 1000));
+			await new Promise(resolve => setTimeout(resolve, 600));
 			goto('/dashboard');
 		} catch (err) {
 			error = 'An unexpected error occured';
@@ -70,7 +70,7 @@
 			localStorage.setItem('token', data.token);
 			user.set(data.user);
 			console.log(get(user));
-			await new Promise(resolve => setTimeout(resolve, 1000));
+			await new Promise(resolve => setTimeout(resolve, 600));
 			goto('/dashboard');
 		} catch (err) {
 			error = 'An unexpected error occured';
