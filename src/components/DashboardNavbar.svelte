@@ -13,7 +13,7 @@
 </script>
 
 <div class="flex flex-col gap-10">
-    <NavbarItem label="Profile" link="/you" icon={faUser}/>
+    <NavbarItem label="Profile" link="/profile" icon={faUser}/>
     <NavbarItem label="Friends" link="/friends" icon={faUsers}/>
     <NavbarItem label="Dashboard" link="/dashboard" icon={faTableCells}/>
     <NavbarItem label="Leaderboard" link="/leaderboard" icon={faRankingStar}/>

@@ -1,0 +1,11 @@
+Model Information:
+* title:	The Incredible Hulk: Edward Norton's Hulk
+* source:	https://sketchfab.com/3d-models/the-incredible-hulk-edward-nortons-hulk-5582a491341446ef944f7a32f4c891c1
+* author:	We Are Venom (https://sketchfab.com/Damia021)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "The Incredible Hulk: Edward Norton's Hulk" (https://sketchfab.com/3d-models/the-incredible-hulk-edward-nortons-hulk-5582a491341446ef944f7a32f4c891c1) by We Are Venom (https://sketchfab.com/Damia021) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
