@@ -3,6 +3,7 @@
 	import { API_URL } from '$lib';
 	import type { AuthResponse, User } from '$lib';
 	import { user } from '$lib/stores/user';
+	import { get } from 'svelte/store';
 
 	let username = '';
 	let password = '';
@@ -35,6 +36,8 @@
 
 			localStorage.setItem('token', data.token);
 			user.set(data.user);
+			console.log(get(user));
+			await new Promise(resolve => setTimeout(resolve, 1000));
 			goto('/dashboard');
 		} catch (err) {
 			error = 'An unexpected error occured';
@@ -66,6 +69,8 @@
 
 			localStorage.setItem('token', data.token);
 			user.set(data.user);
+			console.log(get(user));
+			await new Promise(resolve => setTimeout(resolve, 1000));
 			goto('/dashboard');
 		} catch (err) {
 			error = 'An unexpected error occured';
