@@ -84,7 +84,7 @@
 	<input type="password" class="bg-primaryBg p-2 rounded-md border-black border-[1.5px] outline-none text-accent" bind:value={password} placeholder="password..." required />
 	<div class="flex gap-10">
 		<button type="button" on:click={login} class="uppercase font-mono font-semibold hover:brightness-75 ease-in-out duration-300">Login</button>
-		<button type="submit" on:click={register} class="uppercase font-mono font-semibold hover:brightness-75 ease-in-out duration-300">Register</button>
+		<button type="button" on:click={register} class="uppercase font-mono font-semibold hover:brightness-75 ease-in-out duration-300">Register</button>
 	</div>
 
 	{#if error}

@@ -90,7 +90,7 @@
   <style>
     .three-container {
       width: 700px; /* Adjust as needed */
-      height: 700px; /* Adjust as needed */
+      height: 800px; /* Adjust as needed */
     }
   </style>
   
