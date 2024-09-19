@@ -36,7 +36,6 @@
 
 			localStorage.setItem('token', data.token);
 			user.set(data.user);
-			console.log(get(user));
 			await new Promise(resolve => setTimeout(resolve, 600));
 			goto('/dashboard');
 		} catch (err) {
@@ -69,7 +68,6 @@
 
 			localStorage.setItem('token', data.token);
 			user.set(data.user);
-			console.log(get(user));
 			await new Promise(resolve => setTimeout(resolve, 600));
 			goto('/dashboard');
 		} catch (err) {

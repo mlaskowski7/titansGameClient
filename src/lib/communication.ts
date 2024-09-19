@@ -1,6 +1,6 @@
 import { get } from 'svelte/store';
 import { API_URL } from './constants';
-import type { AuthResponse, User } from './types';
+import type { AuthResponse, Character, User } from './types';
 import { user } from './stores/user';
 import { redirect } from '@sveltejs/kit';
 
@@ -36,7 +36,6 @@ export async function getUserFromToken(token: string): Promise<{ user?: User; me
 
 export async function isUserLoggedIn(): Promise<boolean> {
 	const currentUser = get(user);
-	console.log(currentUser);
 
 	if(currentUser)
 		return true;
@@ -53,5 +52,24 @@ export async function isUserLoggedIn(): Promise<boolean> {
 		return true;
 	} else {
 		return false;
+	}
+}
+
+export async function getAllCharacters(): Promise<Character[]> {
+	try {
+		const resp = await fetch(`${API_URL}/characters`, {
+			method: 'GET',
+		});
+
+		if (!resp.ok) {
+			return [] as Character[];
+		}
+
+		const data: Character[] = await resp.json();
+
+		return data;
+	} catch (err) {
+		console.error('Getting list of characters failed', err);
+		return [] as Character[];
 	}
 }

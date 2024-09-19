@@ -2,6 +2,15 @@ export interface User {
 	id: string;
 	username: string;
 	created_at: string;
+	times_logged_in: number;
+	character_id: number; 
+}
+
+export interface Character {
+	id: number;
+	name: string;
+	health: number;
+	strength: number;
 }
 
 export interface AuthResponse {
