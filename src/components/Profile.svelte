@@ -12,6 +12,8 @@
     let camera: THREE.PerspectiveCamera;
     let renderer: THREE.WebGLRenderer;
     let model: THREE.Group;
+
+    let character = 1;
   
     onMount(() => {
       // Set up the scene
@@ -39,7 +41,7 @@
       const loader = new GLTFLoader();
   
       loader.load(
-        '/models/character1/scene.gltf', // Adjust the path to your model file
+        `/models/character${character}/scene.gltf`, // Adjust the path to your model file
         (gltf: any) => {
           model = gltf.scene;
           scene.add(model);

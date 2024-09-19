@@ -8,7 +8,8 @@
     let showPopover = false;
 
     // Toggle the popover visibility
-    function togglePopover() {
+    function togglePopover(event: MouseEvent) {
+        event.stopPropagation(); // Prevent closing immediately when clicked
         showPopover = !showPopover;
     }
 
@@ -29,13 +30,32 @@
 
 <style>
     .popover {
-        position: absolute;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80vw;
+        height: 80vh;
         background-color: white;
         color: black;
-        padding: 1rem;
+        padding: 2rem;
         border: 1px solid black;
         border-radius: 8px;
-        z-index: 10;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        z-index: 999;
     }
 </style>
 
@@ -43,14 +63,18 @@
     <p>Username:</p>
     <input type="text" class="p-2 rounded-md border-black border-[1.5px] outline-none text-black" bind:value={username} placeholder="username..." required />
     <p>Character:</p>
-    <div class="flex gap-4">
-        <input type="number" class="p-2 rounded-md border-black border-[1.5px] outline-none text-black w-20" bind:value={character} placeholder="character..." required />
+    <div class="flex gap-4 relative">
+        <input type="number" class="p-2 rounded-md border-black border-[1.5px] outline-none text-black w-20" bind:value={character} required />
         <button type="button" on:click={togglePopover} class="text-[12px] underline-offset-2 hover:underline ease-in-out duration-300">
             Click to view all
         </button>
     </div>
 
     {#if showPopover}
+        <!-- Dark overlay -->
+        <div class="overlay" on:click={togglePopover}></div>
+
+        <!-- Popover content centered on the screen -->
         <div class="popover">
             <p>Select a character:</p>
             <ul>
@@ -59,6 +83,7 @@
                 <li>Character 3</li>
                 <!-- Add more characters as needed -->
             </ul>
+            <button type="button" on:click={togglePopover}>Close</button>
         </div>
     {/if}
 
