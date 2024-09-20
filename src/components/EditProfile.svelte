@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { getAllCharacters, type Character, type User } from "$lib";
+	import { goto } from "$app/navigation";
+    import { API_URL, getAllCharacters, type AuthResponse, type Character, type User } from "$lib";
 	import { characters, user } from "$lib/stores/user";
 	import { onMount } from "svelte";
   
@@ -10,6 +11,9 @@
     // Bind form inputs to the values of `currentUser` and `currentCharacter`
     let username = currentUser?.username ?? '';
     let character = currentUser?.character.id ?? 1;
+    let error: string | null = null;
+	  let successMessage: null | 'Updated user successfully' = null;
+
   
     onMount(async () => {
         if(!charactersArr){
@@ -18,10 +22,32 @@
             characters.set(result);
         }
     });
-    function updateProfile() {
-      if (currentUser) {
-        // Update the user and character
-        currentUser.username = username;
+    async function updateProfile() {
+      try {
+        const resp = await fetch(`${API_URL}/auth/user/${currentUser?.id}`, {
+          method: 'PUT',
+            headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username, character_id: character })
+        });
+
+        if (resp.ok){
+          successMessage = 'Updated user successfully'; 
+				  error = null;
+        } else {
+          error = 'There are some problems regarding our server, please try again in couple of minutes';
+          successMessage = null;
+          return;
+        }
+
+        const data: User = await resp.json();
+
+        user.set(data);
+        await new Promise(resolve => setTimeout(resolve, 600));
+			  window.location.reload();
+      } catch (error) {
+        error = 'An unexpected error occured'
       }
     }
   </script>
@@ -51,5 +77,13 @@
     >
       Update profile
     </button>
+
+    {#if error}
+      <p style="color: red;" class="font-extrabold">{error}</p>
+    {/if}
+
+    {#if successMessage}
+      <p class="text-accent font-extrabold">{successMessage}</p>
+    {/if}
   </form>
   
