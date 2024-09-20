@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import type { User } from "$lib";
+import type { Character, User } from "$lib";
 
 export const user = writable<User | null>(null);
-export const currentCharacter = writable<number | null>(null);
+export const characters = writable<Character[] | null>(null);

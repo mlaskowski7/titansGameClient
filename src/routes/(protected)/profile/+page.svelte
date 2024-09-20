@@ -1,25 +1,19 @@
 <script lang="ts">
-    import type { User } from "$lib";
-	import { user } from "$lib/stores/user";
-	import { onDestroy } from "svelte";
-	import Profile from "../../../components/Profile.svelte";
-	import ProfileStats from "../../../components/EditProfile.svelte";
-	import EditProfile from "../../../components/EditProfile.svelte";
-
-    let currentUser: User | null;
-
-    const unsubscribe = user.subscribe(value => {
-        currentUser = value;
+    import { getAllCharacters, type Character, type User } from "$lib";
+    import { characters, user } from "$lib/stores/user"; // Import stores
+    import Profile from "../../../components/Profile.svelte";
+    import EditProfile from "../../../components/EditProfile.svelte"; // Import EditProfile
+	import { onMount } from "svelte";
+  
+    onMount(async () => {
+        // Fetch all characters and update the `characters` store
+        const fetchedCharacters = await getAllCharacters();
+        characters.set(fetchedCharacters);
     });
-
-    onDestroy(() => {
-        // clean up the subscription
-        unsubscribe();
-    });
-</script>
-
-<div class="flex flex-row gap-20 p-10 justify-center items-center">
-    <Profile currentUser={currentUser} />
-    <EditProfile currentUser={currentUser} />
-    
-</div>
+  </script>
+  
+  <div class="flex flex-row gap-20 p-10 justify-center items-center">
+    <Profile />
+    <EditProfile />
+  </div>
+  
