@@ -1,6 +1,6 @@
 <script lang="ts">
     import { getAllCharacters, type Character, type User } from "$lib";
-    import { characters, user } from "$lib/stores/user"; // Import stores
+    import { characters } from "$lib/stores/user"; // Import stores
     import Profile from "../../../components/Profile.svelte";
     import EditProfile from "../../../components/EditProfile.svelte"; // Import EditProfile
 	import { onMount } from "svelte";

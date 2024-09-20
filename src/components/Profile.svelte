@@ -3,19 +3,20 @@
   import { characters, user } from "$lib/stores/user"; // Import stores
   import { faLeftLong, faRightLong } from "@fortawesome/free-solid-svg-icons";
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
-  import {onMount } from "svelte";
+	import { onMount } from "svelte";
 
   let currentUser: User | null = $user; // Automatically subscribe to `user` store
-  let currentCharacter: Character | null | undefined = null;
+  let currentCharacter: Character | null | undefined = currentUser?.character;
 
   // Use the store shorthand ($) to access characters
   let charactersArray: Character[] | null = $characters;
 
   onMount(async () => {
-    // Set the current character based on the user’s character_id
-    if (charactersArray) {
-      currentCharacter = charactersArray.find((c) => c.id === currentUser?.character_id);
-    }
+      if(!charactersArray){
+          const result = await getAllCharacters();
+          charactersArray = result;
+          characters.set(result);
+      }
   });
 
   // Change the character by cycling through the character array
@@ -48,7 +49,7 @@
   </div>
   <div class="flex flex-col items-start justify-center gap-2 p-5">
     <div class="text-accent uppercase font-mono">{currentUser?.username}</div>
-    <div class="text-[16px]">Character: {currentUser?.character_id}</div>
+    <div class="text-[16px]">Character: {currentUser?.character.name}</div>
     <div class="text-[16px]">Account created at: {currentUser?.created_at.split('T')[0]}</div>
     <div class="text-[16px]">Times logged in: {currentUser?.times_logged_in}</div>
   </div>

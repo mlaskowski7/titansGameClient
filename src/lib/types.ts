@@ -3,7 +3,7 @@ export interface User {
 	username: string;
 	created_at: string;
 	times_logged_in: number;
-	character_id: number; 
+	character: Character; 
 }
 
 export interface Character {
