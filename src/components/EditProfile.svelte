@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
     import { API_URL, getAllCharacters, type AuthResponse, type Character, type User } from "$lib";
-	import { characters, user } from "$lib/stores/user";
+	import { characters, user } from "$lib/stores";
 	import { onMount } from "svelte";
   
     export let currentUser: User | null = $user;

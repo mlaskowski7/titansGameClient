@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getAllCharacters, type Character, type User } from "$lib";
-  import { characters, user } from "$lib/stores/user"; // Import stores
+	import { characters, user } from "$lib/stores";
   import { faLeftLong, faRightLong } from "@fortawesome/free-solid-svg-icons";
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
 	import { onMount } from "svelte";
@@ -49,6 +49,7 @@
   </div>
   <div class="flex flex-col items-start justify-center gap-2 p-5">
     <div class="text-accent uppercase font-mono">{currentUser?.username}</div>
+    <div class="text-[16px]">Friends: {currentUser?.friends.length}</div>
     <div class="text-[16px]">Character: {currentUser?.character.name}</div>
     <div class="text-[16px]">Account created at: {currentUser?.created_at.split('T')[0]}</div>
     <div class="text-[16px]">Times logged in: {currentUser?.times_logged_in}</div>

@@ -3,7 +3,8 @@ export interface User {
 	username: string;
 	created_at: string;
 	times_logged_in: number;
-	character: Character; 
+	character: Character;
+	friends: User[];
 }
 
 export interface Character {

@@ -73,3 +73,20 @@ export async function getAllCharacters(): Promise<Character[]> {
 		return [] as Character[];
 	}
 }
+
+export async function getAllUsers(): Promise<User[]> {
+	try {
+		const resp = await fetch(`${API_URL}/auth/users`);
+
+		if(!resp.ok) {
+			return [] as User[];
+		}
+
+		const data: User[] = await resp.json();
+
+		return data;
+	} catch (err) {
+		console.error('Getting list of users failed', err);
+		return [] as User[];
+	}
+}
