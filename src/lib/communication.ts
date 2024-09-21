@@ -117,7 +117,37 @@ export async function addFriend(userId: string, friend: User) : Promise<{success
 		console.error('Adding new friend failed', error);
 		return {
 			success: false,
-			message: 'An unexpected error occure, pls try again later'
+			message: 'An unexpected error occured, pls try again later'
+		}
+	}
+}
+
+export async function removeFriend(userId: string, friend: User) : Promise<{success: boolean, message: string}>{
+	try {
+		const resp = await fetch(`${API_URL}/friends/remove`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ user_id: parseInt(userId), friend_id: parseInt(friend.id) })
+		});
+
+		if(!resp.ok) {
+			return {
+				success: false,
+				message: "Couldnt remove the friend, pls try again later"
+			};
+		}
+
+		return {
+			success: true,
+			message: `Removed ${friend.username} from friends`
+		}
+	} catch (error) {
+		console.error('Adding new friend failed', error);
+		return {
+			success: false,
+			message: 'An unexpected error occured, pls try again later'
 		}
 	}
 }
