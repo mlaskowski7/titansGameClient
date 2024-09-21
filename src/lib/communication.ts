@@ -90,3 +90,34 @@ export async function getAllUsers(): Promise<User[]> {
 		return [] as User[];
 	}
 }
+
+
+export async function addFriend(userId: string, friend: User) : Promise<{success: boolean, message: string}>{
+	try {
+		const resp = await fetch(`${API_URL}/friends/add`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ user_id: parseInt(userId), friend_id: parseInt(friend.id) })
+		});
+
+		if(!resp.ok) {
+			return {
+				success: false,
+				message: "Couldnt add as friend, pls try again later"
+			};
+		}
+
+		return {
+			success: true,
+			message: `Added ${friend.username} as friend`
+		}
+	} catch (error) {
+		console.error('Adding new friend failed', error);
+		return {
+			success: false,
+			message: 'An unexpected error occure, pls try again later'
+		}
+	}
+}

@@ -45,6 +45,10 @@
 
 	async function register(): Promise<void>{
 		try {
+			if(username === '' || password === '') {
+				error = 'Password or username cannot be empty';
+				return;
+			}
 			const resp = await fetch(`${API_URL}/auth/register`, {
 				method: 'POST',
 				headers: {
