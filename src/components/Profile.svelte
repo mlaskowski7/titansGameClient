@@ -37,7 +37,7 @@
       <button on:click={() => changeCharacter(-1)} class="hover:brightness-75 ease-in-out duration-300">
         <FontAwesomeIcon icon={faLeftLong} />
       </button>
-      <div class="font-mono font-bold uppercase">{currentCharacter?.name}</div>
+      <div class="font-mono font-bold uppercase w-[120px]">{currentCharacter?.name}</div>
       <button on:click={() => changeCharacter(1)} class="hover:brightness-75 ease-in-out duration-300">
         <FontAwesomeIcon icon={faRightLong} />
       </button>

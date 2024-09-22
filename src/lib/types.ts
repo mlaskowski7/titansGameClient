@@ -5,6 +5,7 @@ export interface User {
 	times_logged_in: number;
 	character: Character;
 	friends: User[];
+	points: number;
 }
 
 export interface Character {
