@@ -41,7 +41,7 @@
           </div>
         {/each}
     </div>
-    <div class="flex flex-col bg-secondaryBg gap-2 rounded-xl p-4 items-center justify-center">
+    <div class="flex flex-col gap-2 rounded-xl p-4 items-center justify-center">
         {#each sortedPlayers.slice(3) as player, index}
           <div class="font-bold">
             <span>{index + 4}.</span>
