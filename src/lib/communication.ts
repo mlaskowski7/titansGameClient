@@ -107,6 +107,23 @@ export async function getAllLobbies(): Promise<Lobby[]> {
 	}
 }
 
+export async function getLobbyById(id: number): Promise<Lobby | null> {
+	try {
+		const resp = await fetch(`${API_URL}/lobbies/id/${id}`);
+
+		if (!resp.ok) {
+			return null;
+		}
+
+		const data = await resp.json() as Lobby;
+
+		return data;
+	} catch (err) {
+		console.error('Getting lobby failed', err);
+		return null;
+	}
+}
+
 export async function joinLobby(userId: string, lobbyId: string): Promise<{ success: boolean, message: string }> {
 	try {
 		const resp = await fetch(`${API_URL}/lobbies/add`, {
