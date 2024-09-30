@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { exitLobby, getAllUsers, getUserFromToken, type Lobby, type User } from '$lib';
+	import { exitLobby, getAllUsers, getUserFromToken, type Lobby, LobbyState, type User } from '$lib';
 	import { joinLobby } from '$lib';
 	import { user, users } from '$lib/stores';
 	import { onMount } from 'svelte';
@@ -79,11 +79,13 @@
 	<div class="text-[16px]">State: {lobby.state}</div>
 	<div class="text-[16px]">Players in: {playersCounter}</div>
 	<div class="text-[16px]">Max players: {lobby.max_players}</div>
-	<button class={` ${isUserInLobby ? "bg-secondaryBg" : "bg-primaryBg"} w-40 mx-auto rounded-md hover:brightness-75 duration-300 ease-in-out mt-4`}>View</button>
+	<a href={`/lobby/${lobby.id}`} class={` ${isUserInLobby ? "bg-secondaryBg" : "bg-primaryBg"} w-40 mx-auto rounded-md hover:brightness-75 duration-300 ease-in-out mt-4 text-center`}>View</a>
 	{#if isUserInLobby}
 		<button class="bg-secondaryBg w-40 mx-auto rounded-md hover:brightness-75 duration-300 ease-in-out" on:click={exit}>Exit</button>
 	{:else}
-		<button class="bg-primaryBg w-40 mx-auto rounded-md hover:brightness-75 duration-300 ease-in-out" on:click={join}>Join</button>
+		{#if lobby.state === LobbyState.CONFIGURING}
+			<button class="bg-primaryBg w-40 mx-auto rounded-md hover:brightness-75 duration-300 ease-in-out" on:click={join}>Join</button>
+		{/if}
 	{/if}
 	{#if error}
 		<p style="color: red;" class="font-extrabold mt-4">{error}</p>
