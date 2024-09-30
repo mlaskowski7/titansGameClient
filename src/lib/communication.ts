@@ -1,8 +1,7 @@
 import { get } from 'svelte/store';
 import { API_URL } from './constants';
-import type { AuthResponse, Character, User } from './types';
+import type { AuthResponse, Character, Lobby, User } from './types';
 import { user } from './stores/user';
-import { redirect } from '@sveltejs/kit';
 
 
 export async function getUserFromToken(token: string): Promise<{ user?: User; message?: string }> {
@@ -82,12 +81,25 @@ export async function getAllUsers(): Promise<User[]> {
 			return [] as User[];
 		}
 
-		const data: User[] = await resp.json();
-
-		return data;
+		return await resp.json() as User[];
 	} catch (err) {
 		console.error('Getting list of users failed', err);
 		return [] as User[];
+	}
+}
+
+export async function getAllLobbies(): Promise<Lobby[]> {
+	try {
+		const resp = await fetch(`${API_URL}/lobbies`);
+
+		if (!resp.ok) {
+			return [] as Lobby[];
+		}
+
+		return await resp.json() as Lobby[];
+	} catch (err) {
+		console.error('Getting list of lobbies failed', err);
+		return [] as Lobby[];
 	}
 }
 

@@ -8,6 +8,20 @@ export interface User {
 	points: number;
 }
 
+export interface Lobby {
+	id: string;
+	name: string;
+	state: LobbyState,
+	max_players: number;
+}
+
+export enum LobbyState {
+	WAITING,
+	CONFIGURING,
+	ONGOING,
+	FINISHED,
+}
+
 export interface Character {
 	id: number;
 	name: string;
