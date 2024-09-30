@@ -1,32 +1,74 @@
 <script lang="ts">
-	import type { Lobby, User } from '$lib';
+	import { exitLobby, getAllUsers, getUserFromToken, type Lobby, type User } from '$lib';
 	import { joinLobby } from '$lib';
+	import { user, users } from '$lib/stores';
+	import { onMount } from 'svelte';
 
 	export let lobby: Lobby;
-	export let user: User | null;
-	export let users: User[] | null;
-
+	export let currentUser: User | null;
+	let currentUsers: User[] | null = $users;
 	let playersCounter = 0;
-	for(const i of users ?? []) {
-		if (i.lobby_id === lobby.id) {
-			playersCounter++;
+
+	const countPlayers = () => {
+		for(const i of currentUsers ?? []) {
+			if (i.lobby?.id === lobby?.id) {
+				playersCounter++;
+			}
 		}
 	}
 
-	let isUserInLobby: boolean = user?.lobby_id === lobby.id;
+	countPlayers();
+
+	let isUserInLobby: boolean = currentUser?.lobby?.id === lobby.id;
 
 	let error = '';
 	let success = '';
 
+	onMount(async () => {
+		if(!currentUsers) {
+			const resp = await getAllUsers();
+			currentUsers = resp;
+			users.set(resp);
+		}
+		countPlayers();
+	});
+
 	const join = async () => {
-		const result = await joinLobby(user?.id ?? "", lobby.id);
+		const result = await joinLobby(currentUser?.id ?? "", lobby.id);
 
 		if(result.success) {
 			error = '';
 			success = result.message;
+
+			const userResult = await getUserFromToken(localStorage.getItem('token') ?? "");
+			user.set(userResult.user ?? null);
+			await new Promise(resolve => setTimeout(resolve, 600));
+			window.location.reload();
 		} else {
 			success = '';
 			error = result.message;
+			await new Promise(resolve => setTimeout(resolve, 600));
+			window.location.reload();
+		}
+	}
+
+	const exit = async () => {
+		const result = await exitLobby(currentUser?.id ?? "");
+
+		if(result.success) {
+			error = '';
+			success = result.message;
+
+			const userResult = await getUserFromToken(localStorage.getItem('token') ?? "");
+			user.set(userResult.user ?? null);
+			await new Promise(resolve => setTimeout(resolve, 600));
+			window.location.reload();
+			countPlayers();
+		} else {
+			success = '';
+			error = result.message;
+			await new Promise(resolve => setTimeout(resolve, 600));
+			window.location.reload();
 		}
 	}
 
@@ -37,17 +79,18 @@
 	<div class="text-[16px]">State: {lobby.state}</div>
 	<div class="text-[16px]">Players in: {playersCounter}</div>
 	<div class="text-[16px]">Max players: {lobby.max_players}</div>
+	<button class={` ${isUserInLobby ? "bg-secondaryBg" : "bg-primaryBg"} w-40 mx-auto rounded-md hover:brightness-75 duration-300 ease-in-out mt-4`}>View</button>
 	{#if isUserInLobby}
-		<button class="bg-primaryBg w-40 mx-auto rounded-md hover:brightness-75 duration-300 ease-in-out mt-4">Exit Lobby</button>
+		<button class="bg-secondaryBg w-40 mx-auto rounded-md hover:brightness-75 duration-300 ease-in-out" on:click={exit}>Exit</button>
 	{:else}
-		<button class="bg-primaryBg w-40 mx-auto rounded-md hover:brightness-75 duration-300 ease-in-out mt-4" on:click={join}>Join Lobby</button>
+		<button class="bg-primaryBg w-40 mx-auto rounded-md hover:brightness-75 duration-300 ease-in-out" on:click={join}>Join</button>
 	{/if}
 	{#if error}
 		<p style="color: red;" class="font-extrabold mt-4">{error}</p>
 	{/if}
 
 	{#if success}
-		<p class="text-accent font-extrabold mt-4">{success}</p>
+		<p class={`${isUserInLobby ? "text-secondaryBg" : "text-accent"} font-extrabold mt-4`}>{success}</p>
 	{/if}
 
 </div>

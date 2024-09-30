@@ -6,7 +6,6 @@ export interface User {
 	character: Character;
 	friends: User[];
 	points: number;
-	lobby_id: string,
 	lobby: Lobby,
 }
 

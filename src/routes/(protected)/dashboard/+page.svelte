@@ -2,13 +2,12 @@
 
 	import { lobbies } from '$lib/stores/lobbies';
 	import { onMount } from 'svelte';
-	import { getAllLobbies, getAllUsers } from '$lib';
+	import { getAllLobbies } from '$lib';
 	import LobbyCard from '../../../components/LobbyCard.svelte';
-	import { user, users } from '$lib/stores';
+	import { user } from '$lib/stores';
 
 	let currentLobbies = $lobbies;
 	let currentUser = $user;
-	let currentUsers = $users;
 
 	onMount(async () => {
 		if (!currentLobbies) {
@@ -16,17 +15,12 @@
 			currentLobbies = resp;
 			lobbies.set(resp);
 		}
-		if(!currentUsers) {
-			const resp = await getAllUsers();
-			currentUsers = resp;
-			users.set(resp);
-		}
 	})
 </script>
 
 <div class="flex flex-col w-full gap-40 ml-20 p-10 justify-center items-center">
 	{#each currentLobbies ?? [] as lobby}
-		<LobbyCard {lobby} user={currentUser} users={currentUsers} />
+		<LobbyCard {lobby} currentUser={currentUser} />
 	{/each}
 </div>
 

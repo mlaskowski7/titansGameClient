@@ -81,7 +81,9 @@ export async function getAllUsers(): Promise<User[]> {
 			return [] as User[];
 		}
 
-		return await resp.json() as User[];
+		const data =  await resp.json() as User[];
+
+		return data;
 	} catch (err) {
 		console.error('Getting list of users failed', err);
 		return [] as User[];
@@ -96,7 +98,9 @@ export async function getAllLobbies(): Promise<Lobby[]> {
 			return [] as Lobby[];
 		}
 
-		return await resp.json() as Lobby[];
+		const data = await resp.json() as Lobby[];
+
+		return data;
 	} catch (err) {
 		console.error('Getting list of lobbies failed', err);
 		return [] as Lobby[];
@@ -126,6 +130,32 @@ export async function joinLobby(userId: string, lobbyId: string): Promise<{ succ
 		}
 	} catch (err) {
 		console.error('Adding to lobby failed', err);
+		return {
+			success: false,
+			message: 'An unexpected error occurred, pls try again later'
+		}
+	}
+}
+
+export async function exitLobby(userId: string): Promise<{ success: boolean, message: string }> {
+	try {
+		const resp = await fetch(`${API_URL}/lobbies/exit/${userId}`, {
+			method: 'POST'
+		});
+
+		if(!resp.ok) {
+			return {
+				success: false,
+				message: "Couldn't exit this lobby"
+			}
+		}
+
+		return {
+			success: true,
+			message: "Successfully exited this lobby",
+		}
+	} catch (err) {
+		console.error('Exiting lobby failed', err);
 		return {
 			success: false,
 			message: 'An unexpected error occurred, pls try again later'
