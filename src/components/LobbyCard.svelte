@@ -74,7 +74,7 @@
 
 </script>
 
-<div class={`flex flex-col gap-1 ${ isUserInLobby ? "bg-accent" : "bg-secondaryBg"} p-4 items-center justify-center rounded-xl`}>
+<div class={`flex flex-col gap-1 ${ isUserInLobby ? "bg-accent" : "bg-secondaryBg"} py-4 px-6 items-center justify-center rounded-xl`}>
 	<div class="uppercase font-mono p-[1.5] rounded-md font-extrabold">{lobby.name}</div>
 	<div class="text-[16px]">State: {lobby.state}</div>
 	<div class="text-[16px]">Players in: {playersCounter}</div>

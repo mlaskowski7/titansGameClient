@@ -163,6 +163,36 @@ export async function exitLobby(userId: string): Promise<{ success: boolean, mes
 	}
 }
 
+export async function createLobby(name: string, state: number, maxPlayers: number): Promise<{ success: boolean, message: string }> {
+	try {
+		const resp = await fetch(`${API_URL}/lobbies`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({name, state, max_players: maxPlayers})
+		});
+
+		if(!resp.ok) {
+			return {
+				success: false,
+				message: "Couldn't create this lobby"
+			}
+		}
+
+		return {
+			success: true,
+			message: "Successfully created this lobby",
+		}
+	} catch (err) {
+		console.error('Creating lobby failed', err);
+		return {
+			success: false,
+			message: 'An unexpected error occurred, pls try again later'
+		}
+	}
+}
+
 export async function addFriend(userId: string, friend: User) : Promise<{success: boolean, message: string}>{
 	try {
 		const resp = await fetch(`${API_URL}/friends/add`, {
