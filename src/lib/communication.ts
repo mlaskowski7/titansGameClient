@@ -103,6 +103,35 @@ export async function getAllLobbies(): Promise<Lobby[]> {
 	}
 }
 
+export async function joinLobby(userId: string, lobbyId: string): Promise<{ success: boolean, message: string }> {
+	try {
+		const resp = await fetch(`${API_URL}/lobbies/add`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({user_id: parseInt(userId), lobby_id: parseInt(lobbyId)})
+		});
+
+		if(!resp.ok) {
+			return {
+				success: false,
+				message: "Couldn't join this lobby"
+			}
+		}
+
+		return {
+			success: true,
+			message: "Successfully joined this lobby",
+		}
+	} catch (err) {
+		console.error('Adding to lobby failed', err);
+		return {
+			success: false,
+			message: 'An unexpected error occurred, pls try again later'
+		}
+	}
+}
 
 export async function addFriend(userId: string, friend: User) : Promise<{success: boolean, message: string}>{
 	try {
@@ -117,7 +146,7 @@ export async function addFriend(userId: string, friend: User) : Promise<{success
 		if(!resp.ok) {
 			return {
 				success: false,
-				message: "Couldnt add as friend, pls try again later"
+				message: "Couldn't add as friend, pls try again later"
 			};
 		}
 
@@ -129,7 +158,7 @@ export async function addFriend(userId: string, friend: User) : Promise<{success
 		console.error('Adding new friend failed', error);
 		return {
 			success: false,
-			message: 'An unexpected error occured, pls try again later'
+			message: 'An unexpected error occurred, pls try again later'
 		}
 	}
 }
