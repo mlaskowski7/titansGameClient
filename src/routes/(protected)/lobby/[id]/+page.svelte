@@ -53,7 +53,7 @@
 			{#if currentLobby?.state.toString() === 'FINISHED'}
 				<button
 					disabled
-					class="bg-gray-500 px-2 py-1 text-[12px] rounded-xl uppercase"
+					class="bg-gray-700 px-2 py-1 text-[12px] rounded-xl uppercase"
 					on:click={handleNextState}>Next state</button
 				>
 			{:else}
