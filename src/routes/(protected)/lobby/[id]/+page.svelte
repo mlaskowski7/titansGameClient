@@ -59,7 +59,8 @@
 			{:else}
 				<button
 					class="bg-accent px-2 py-1 text-[12px] rounded-xl uppercase hover:brightness-75 duration-300 ease-in-out"
-					on:click={handleNextState}>Next state</button
+					on:click={handleNextState}
+					>{currentLobby?.state.toString() === 'CONFIGURING' ? 'Start game' : 'Next state'}</button
 				>
 			{/if}
 		</div>
