@@ -1,15 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { users } from '$lib/stores';
-	import {
-		getAllLobbies,
-		getAllUsers,
-		getLobbyById,
-		lobbyStateToString,
-		nextLobbyState,
-		type Lobby,
-		type User
-	} from '$lib';
+	import { getLobbyById, LobbyState, nextLobbyState, type Lobby, type User } from '$lib';
 	import { page } from '$app/stores';
 
 	let id = $page.params.id;
@@ -30,6 +22,13 @@
 			}
 		}
 	});
+
+	const handleNextState = async () => {
+		await nextLobbyState(currentLobby?.state.toString() ?? '', currentLobby?.id ?? '');
+
+		await new Promise((resolve) => setTimeout(resolve, 600));
+		window.location.reload();
+	};
 </script>
 
 <div class="flex flex-row gap-20 w-full items-center justify-between mx-40">
@@ -51,12 +50,18 @@
 			<div class="px-4 py-2 rounded-xl bg-secondaryBg uppercase font-mono">
 				{currentLobby?.state}
 			</div>
-			<button
-				class="bg-accent px-2 py-1 text-[12px] rounded-xl uppercase hover:brightness-75 duration-300 ease-in-out"
-				on:click={() =>
-					nextLobbyState(lobbyStateToString(currentLobby?.state), currentLobby?.id ?? '')}
-				>Next state</button
-			>
+			{#if currentLobby?.state.toString() === 'FINISHED'}
+				<button
+					disabled
+					class="bg-gray-500 px-2 py-1 text-[12px] rounded-xl uppercase"
+					on:click={handleNextState}>Next state</button
+				>
+			{:else}
+				<button
+					class="bg-accent px-2 py-1 text-[12px] rounded-xl uppercase hover:brightness-75 duration-300 ease-in-out"
+					on:click={handleNextState}>Next state</button
+				>
+			{/if}
 		</div>
 	</div>
 	<div class="flex flex-col gap-2 justify-center items-center">

@@ -23,21 +23,6 @@ export enum LobbyState {
 	FINISHED
 }
 
-export function lobbyStateToString(state: LobbyState | null | undefined) {
-	switch (state) {
-		case LobbyState.WAITING:
-			return 'WAITING';
-		case LobbyState.CONFIGURING:
-			return 'CONFIGURING';
-		case LobbyState.ONGOING:
-			return 'ONGOING';
-		case LobbyState.FINISHED:
-			return 'FINISHED';
-		default:
-			return '';
-	}
-}
-
 export interface Character {
 	id: number;
 	name: string;
