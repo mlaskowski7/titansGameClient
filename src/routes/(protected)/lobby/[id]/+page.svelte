@@ -33,7 +33,7 @@
 			currentLobby = await getLobbyById(id);
 		}
 
-		if(!currentUsers) {
+		if (!currentUsers) {
 			const usersResult = await getAllUsers();
 			users.set(usersResult);
 			currentUsers = usersResult;
@@ -71,12 +71,14 @@
 		<div class="flex flex-row gap-2">
 			{#each usersInLobby as current}
 				<div>
-					{current?.username} ({current?.points}p.),
+					{current?.username} ({current?.points}p.)
 				</div>
 			{/each}
 		</div>
 		<div class="flex flex-row gap-4">
-			<div class="px-4 py-2 rounded-xl bg-secondaryBg uppercase font-mono text-center items-center flex ">
+			<div
+				class="px-4 py-2 rounded-xl bg-secondaryBg uppercase font-mono text-center items-center flex"
+			>
 				{currentLobby?.state}
 			</div>
 			<div class="flex flex-col gap-2 items-center justify-center">
@@ -90,7 +92,9 @@
 					<button
 						class="bg-accent px-2 py-1 text-[12px] rounded-xl uppercase hover:brightness-75 duration-300 ease-in-out"
 						on:click={handleNextState}
-					>{currentLobby?.state.toString() === 'CONFIGURING' ? 'Start game' : 'Next state'}</button
+						>{currentLobby?.state.toString() === 'CONFIGURING'
+							? 'Start game'
+							: 'Next state'}</button
 					>
 				{/if}
 
@@ -101,7 +105,6 @@
 					>
 				{/if}
 			</div>
-
 		</div>
 	</div>
 	<div class="flex flex-col gap-2 justify-center items-center">

@@ -51,6 +51,14 @@ export async function isUserLoggedIn(): Promise<boolean> {
 	}
 }
 
+export async function isUserInGame(): Promise<boolean> {
+	const currentUser = get(user);
+
+	if (currentUser?.lobby?.state.toString() == 'ONGOING') return true;
+
+	return false;
+}
+
 export async function getAllCharacters(): Promise<Character[]> {
 	try {
 		const resp = await fetch(`${API_URL}/characters`, {
